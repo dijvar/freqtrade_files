@@ -1,0 +1,30 @@
+docker-compose up -d
+
+docker compose run --rm freqtrade plot-dataframe --strategy SampleStrategy --export-filename user_data/backtest_results/.last_result.json -p FTM/USDT:USDT
+docker compose run --rm freqtrade hyperopt --config user_data/config.json --hyperopt-loss OnlyProfitHyperOptLoss -i 1m --strategy SampleStrategy -e 100 --spaces sell roi stoploss trailing -p ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT --timerange 20221201-
+docker compose run --rm freqtrade backtesting --config user_data/config.json --strategy SampleStrategy --timerange 20230101- -i 1m -p ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT
+docker compose run --rm freqtrade download-data --exchange binance --pairs ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT --prepend --timerange 20220101- -t 1m 5m
+docker compose run --rm freqtrade backtesting --config user_data/config.json --strategy Diamond --timerange 20220101- -i 5m -p ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT
+
+docker compose run --rm freqtrade download-data --exchange binance --pairs ARB/USDT:USDT ADA/USDT:USDT APT/USDT:USDT MATIC/USDT:USDT LINK/USDT:USDT ZIL/USDT:USDT SOL/USDT:USDT CFX/USDT:USDT ID/USDT:USDT XRP/USDT:USDT OP/USDT:USDT CTSI/USDT:USDT LTC/USDT:USDT INJ/USDT:USDT DYDX/USDT:USDT ETC/USDT:USDT FIL/USDT:USDT SXP/USDT:USDT MASK/USDT:USDT GAL/USDT:USDT COCOS/USDT:USDT RNDR/USDT:USDT FTM/USDT:USDT AVAX/USDT:USDT --prepend --timerange 20220101-20230422 -t 1m 5m 15m 1h 4h 1d
+
+docker compose run --rm freqtrade trade --strategy NostalgiaForInfinityX2 -c user_data/config_dry.json --db-url sqlite:///tradesv3.dryrun.sqlite --dry-run
+
+docker compose run --rm freqtrade trade --strategy BB_RPB_3c -c user_data/config_dry_bb.json --db-url sqlite:///tradesv3.dryrun.sqlite --dry-run
+
+docker compose run --rm freqtrade install-ui
+
+docker compose run --rm freqtrade backtesting --config user_data/config.json --strategy FAlphaTrend --timerange 20220101-20230422 -i 15m --timeframe-detail 5m -p ARB/USDT:USDT ADA/USDT:USDT APT/USDT:USDT MATIC/USDT:USDT LINK/USDT:USDT ZIL/USDT:USDT SOL/USDT:USDT CFX/USDT:USDT ID/USDT:USDT XRP/USDT:USDT OP/USDT:USDT CTSI/USDT:USDT LTC/USDT:USDT INJ/USDT:USDT DYDX/USDT:USDT ETC/USDT:USDT FIL/USDT:USDT SXP/USDT:USDT MASK/USDT:USDT GAL/USDT:USDT COCOS/USDT:USDT RNDR/USDT:USDT FTM/USDT:USDT AVAX/USDT:USDT
+
+docker compose run --rm freqtrade backtesting --config user_data/config.json --strategy FAlphaTrend --timerange 20220101-20230410 -i 1h --timeframe-detail 5m -p XRP/USDT:USDT XMR/USDT:USDT XLM/USDT:USDT TRX/USDT:USDT THETA/USDT:USDT SXP/USDT:USDT SUSHI/USDT:USDT SRM/USDT:USDT SOL/USDT:USDT RUNE/USDT:USDT ROSE/USDT:USDT QNT/USDT:USDT PEOPLE/USDT:USDT ONE/USDT:USDT OMG/USDT:USDT NEO/USDT:USDT MATIC/USDT:USDT MAGIC/USDT:USDT LTC/USDT:USDT LINK/USDT:USDT KAVA/USDT:USDT JASMY/USDT:USDT ICX/USDT:USDT ICP/USDT:USDT FTT/USDT:USDT FLOW/USDT:USDT FLM/USDT:USDT 
+
+docker compose run --rm freqtrade plot-dataframe --strategy FAlphaTrend --export-filename user_data/backtest_results/backtest-result-2023-04-12_02-25-28.json -p ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT --timerange 20220101-20230410 -i 15m
+
+docker compose run --rm freqtrade backtesting --config user_data/E0V1E_config.json --strategy E0V1E --timerange 20230101-20230410 -i 5m --timeframe-detail 1m -p ONT/USDT:USDT MANA/USDT:USDT FTM/USDT:USDT ADA/USDT:USDT ATOM/USDT:USDT ROSE/USDT:USDT
+
+
+docker compose run --rm freqtrade backtesting --config user_data/config.json --strategy NostalgiaForInfinityX2 --timerange 20230101-20230501 -i 5m --timeframe-detail 1m -p ARB/USDT:USDT ADA/USDT:USDT APT/USDT:USDT MATIC/USDT:USDT LINK/USDT:USDT ZIL/USDT:USDT SOL/USDT:USDT CFX/USDT:USDT ID/USDT:USDT XRP/USDT:USDT OP/USDT:USDT CTSI/USDT:USDT LTC/USDT:USDT INJ/USDT:USDT DYDX/USDT:USDT ETC/USDT:USDT FIL/USDT:USDT SXP/USDT:USDT MASK/USDT:USDT GAL/USDT:USDT COCOS/USDT:USDT RNDR/USDT:USDT FTM/USDT:USDT AVAX/USDT:USDT
+
+docker compose run --rm freqtrade backtesting --config user_data/config_backtest.json --strategy BB_RPB_TSL_BI --timerange 20230101-20230508 -i 5m --timeframe-detail 1m -p ARB/USDT ADA/USDT APT/USDT MATIC/USDT LINK/USDT ZIL/USDT SOL/USDT CFX/USDT ID/USDT XRP/USDT OP/USDT CTSI/USDT LTC/USDT INJ/USDT DYDX/USDT ETC/USDT FIL/USDT SXP/USDT MASK/USDT GAL/USDT COCOS/USDT RNDR/USDT FTM/USDT AVAX/USDT
+
+docker compose run --rm freqtrade download-data --exchange binance --tradingmode spot --pairs ARB/USDT ADA/USDT APT/USDT MATIC/USDT LINK/USDT ZIL/USDT SOL/USDT CFX/USDT ID/USDT XRP/USDT OP/USDT CTSI/USDT LTC/USDT INJ/USDT DYDX/USDT ETC/USDT FIL/USDT SXP/USDT MASK/USDT GAL/USDT COCOS/USDT RNDR/USDT FTM/USDT AVAX/USDT --prepend --timerange 20230101-20230508 -t 1m 5m 15m 1h 4h 1d

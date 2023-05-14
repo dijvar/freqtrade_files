@@ -42,7 +42,7 @@
         "price_last_balance": 0.0
     },
     "exchange": {
-        "name": "binance",
+        "name": "kucoin",
         "key": "",
         "secret": "",
         "ccxt_config": {"enableRateLimit": true},
