@@ -18,12 +18,12 @@
         "unit": "minutes"
     },
     "order_types": {
-        "entry": "limit",
-        "exit": "limit",
-        "emergency_exit": "limit",
-        "force_entry": "limit",
-        "force_exit": "limit",
-        "stoploss": "limit",
+        "entry": "market",
+        "exit": "market",
+        "emergency_exit": "market",
+        "force_entry": "market",
+        "force_exit": "market",
+        "stoploss": "market",
         "stoploss_on_exchange": false,
         "stoploss_on_exchange_interval": 60
     },
