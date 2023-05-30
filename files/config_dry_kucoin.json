@@ -107,7 +107,8 @@
             ["/locks", "/count", "/trades"],
             ["/show_config", "/marketdir","/logs"],
             ["/whitelist", "/version", "/help"],
-            ["/start", "/stop","/reload_config","/stopentry"]
+            ["/start", "/stop","/reload_config","/stopentry"],
+            ["/forceexit", "/cancel_open_order", "/forcelong","/bl_delete"]
 
         ],
         "allow_custom_messages": true,
