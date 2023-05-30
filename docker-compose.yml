@@ -18,11 +18,17 @@ services:
     # Please read the https://www.freqtrade.io/en/stable/rest-api/ documentation
     # before enabling this.
     ports:
-      - "8080:8080"
+      - "80:8080"
     # Default command used when running `docker compose up`
     command: >
       trade
       --logfile /freqtrade/user_data/logs/freqtrade.log
       --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
-      --config /freqtrade/user_data/config_dry_kucoin.json
-      --strategy NostalgiaForInfinityX2
+      --config /freqtrade/user_data/config_ichi_kucoin.json
+      --strategy ichiV1
+
+    #   trade
+    #   --logfile /freqtrade/user_data/logs/freqtrade.log
+    #   --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
+    #   --config /freqtrade/user_data/config_dry_kucoin.json
+    #   --strategy NostalgiaForInfinityX2
