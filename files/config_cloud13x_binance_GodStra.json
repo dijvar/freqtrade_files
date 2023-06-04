@@ -142,11 +142,11 @@
                 "partial_exit": "on"
             },
             "exit_cancel": "on",
-            "exit_fill": "on",
-            "protection_trigger": "on",
+            "exit_fill": "off",
+            "protection_trigger": "off",
             "protection_trigger_global": "on",
-            "strategy_msg": "on",
-            "show_candle": "on"
+            "strategy_msg": "off",
+            "show_candle": "off"
         },
         "reload": true,
         "balance_dust_level": 0.01
