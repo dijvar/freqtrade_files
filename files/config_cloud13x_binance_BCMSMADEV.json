@@ -1,7 +1,7 @@
 {
     "max_open_trades": 5,
     "strategy": "BinClucMadSMADevelop",
-    "db_url": "sqlite:////freqtrade/user_data/tradesv3.sqlite",
+    "db_url": "sqlite:////freqtrade/user_data/tradesv3_BinClucMadSMADevelop.sqlite",
     "stake_currency": "USDT",
     "stake_amount": "unlimited",
     "tradable_balance_ratio": 0.9,
@@ -119,8 +119,7 @@
             ["/locks", "/count", "/trades"],
             ["/show_config", "/marketdir","/logs"],
             ["/whitelist", "/version", "/help"],
-            ["/start", "/stop","/reload_config","/stopentry"],
-            ["/forceexit", "/cancel_open_order", "/forcelong","/bl_delete"]
+            ["/start", "/stop","/reload_config","/stopentry"]
 
         ],
         "allow_custom_messages": true,
@@ -155,7 +154,7 @@
      "api_server": {
       "enabled": true,
       "listen_ip_address": "0.0.0.0",
-      "listen_port": 8080,
+      "listen_port": 8081,
       "verbosity": "error",
       "enable_openapi": false,
       "jwt_secret_key": "",
