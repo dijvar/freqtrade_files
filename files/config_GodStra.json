@@ -151,17 +151,17 @@
         "reload": true,
         "balance_dust_level": 0.01
     },
-     "api_server": {
-      "enabled": true,
-      "listen_ip_address": "0.0.0.0",
-      "listen_port": 8080,
-      "verbosity": "error",
-      "enable_openapi": false,
-      "jwt_secret_key": "",
-      "ws_token": "",
-      "CORS_origins": ["http://0.0.0.0:8080","http://0.0.0.0:8081"],
-      "username": "freqtrade",
-      "password": "freqtradesifre"
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "4db505e33de1ca0194ebba7015490f29b87b4f024dea3d40cf7f8460kl2c231a",
+        "ws_token": "asdfrewq12345fdgytk",
+        "CORS_origins": ["http://13.239.140.205:8080"],
+        "username": "freqtrade",
+        "password": "freqtradesifre"
      },
      "bot_name": "GodStra",
      "initial_state": "running",
