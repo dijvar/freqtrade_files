@@ -100,7 +100,7 @@
     "telegram": {
         "enabled": true,
         "token": "6135734419:AAH1wtZcCuLNpvNIG5RGoUQwC46jDLD3_MA",
-        "chat_id": "-813199330",
+        "chat_id": "-1001988710749",
         "keyboard": [
             ["/daily", "/balance", "/stats", "/profit"],
             ["/status table", "/performance", "/status"],
@@ -142,7 +142,7 @@
     "api_server": {
         "enabled": true,
         "listen_ip_address": "0.0.0.0",
-        "listen_port": 8080,
+        "listen_port": 8082,
         "verbosity": "error",
         "enable_openapi": false,
         "jwt_secret_key": "4db505e33de1ca0194ebba7015490f29b87b4f024dea3d40cf7f8460cb6a455b",

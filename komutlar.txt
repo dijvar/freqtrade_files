@@ -10,6 +10,10 @@ docker compose run --rm freqtrade download-data --exchange binance --pairs ARB/U
 
 docker compose run --rm freqtrade trade --strategy NostalgiaForInfinityX2 -c user_data/config_dry.json --db-url sqlite:///tradesv3.dryrun.sqlite --dry-run
 
+
+docker compose run --rm freqtrade trade --strategy NostalgiaForInfinityX3 -c user_data/config_nfi_kucoin.json
+
+
 docker compose run --rm freqtrade trade --strategy BB_RPB_3c -c user_data/config_dry_bb.json --db-url sqlite:///tradesv3.dryrun.sqlite --dry-run
 
 docker compose run --rm freqtrade install-ui
