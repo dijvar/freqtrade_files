@@ -40,7 +40,7 @@ class BinClucMadSMADevelop(IStrategy):
     # Trailing stoploss
     trailing_stop = True
     trailing_only_offset_is_reached = True
-    trailing_stop_positive = 0.005
+    trailing_stop_positive = 0.01
     trailing_stop_positive_offset = 0.049
 
     # Custom stoploss
@@ -57,15 +57,15 @@ class BinClucMadSMADevelop(IStrategy):
         # Enable/Disable conditions
         "smaoffset_buy_condition_0_enable": True,
         "smaoffset_buy_condition_1_enable": True,
-        "v6_buy_condition_0_enable": False, # avg 0.47 dd 27%
-        "v6_buy_condition_1_enable": True, # no trade
-        "v6_buy_condition_2_enable": True,  # avg 2.32
-        "v6_buy_condition_3_enable": True, # avg 1.12 dd 6%
-        "v8_buy_condition_0_enable": True, # avg 0.74
-        "v8_buy_condition_1_enable": False,  # avg 0.41 dd 37%
-        "v8_buy_condition_2_enable": True,   # avg 1.37
-        "v8_buy_condition_3_enable": False,  # avg 0.41
-        "v8_buy_condition_4_enable": True,   # avg 1.29
+        "v6_buy_condition_0_enable": True,
+        "v6_buy_condition_1_enable": True,
+        "v6_buy_condition_2_enable": True,
+        "v6_buy_condition_3_enable": True,
+        "v8_buy_condition_0_enable": True,
+        "v8_buy_condition_1_enable": True,
+        "v8_buy_condition_2_enable": True,
+        "v8_buy_condition_3_enable": True,
+        "v8_buy_condition_4_enable": True,
         "v9_buy_condition_0_enable": False,
         "v9_buy_condition_1_enable": False,
         "v9_buy_condition_2_enable": False,
@@ -85,15 +85,23 @@ class BinClucMadSMADevelop(IStrategy):
         "v8_sell_condition_0_enable": True,
         "v8_sell_condition_1_enable": True,
         "smaoffset_sell_condition_0_enable": False,
-    }
-    plot_config = {
-        'main_plot': {
-             },
-        'subplots': {
-            "buy tag": {
-                'buy_tag': {'color': 'green'}
-            },
-        }
+      # "v8_sell_rsi_main": 80,
+      # "sell_custom_roi_profit_1": 0.02,
+      # "sell_custom_roi_profit_2": 0.01,
+      # "sell_custom_roi_profit_3": 0.27,
+      # "sell_custom_roi_profit_4": 0.51,
+      # "sell_custom_roi_profit_5": 0.04,
+      # "sell_custom_roi_rsi_1": 54.68,
+      # "sell_custom_roi_rsi_2": 46.32,
+      # "sell_custom_roi_rsi_3": 54.0,
+      # "sell_custom_roi_rsi_4": 56.66,
+      # "sell_custom_stoploss_1": -0.05,
+      # "sell_trail_down_1": 0.043,
+      # "sell_trail_down_2": 0.134,
+      # "sell_trail_profit_max_1": 0.34,
+      # "sell_trail_profit_max_2": 0.15,
+      # "sell_trail_profit_min_1": 0.208,
+      # "sell_trail_profit_min_2": 0.035
     }
 
     # if you want to see which buy conditions were met
@@ -121,10 +129,10 @@ class BinClucMadSMADevelop(IStrategy):
         5, 80, default=24, space="sell", optimize=False, load=True
     )
     low_offset = DecimalParameter(
-        0.9, 0.99, default=0.975, space="buy", optimize=True, load=True
+        0.9, 0.99, default=0.975, space="buy", optimize=False, load=True
     )
     high_offset = DecimalParameter(
-        0.99, 1.1, default=1.012, space="sell", optimize=True, load=True
+        0.99, 1.1, default=1.012, space="sell", optimize=False, load=True
     )
     # Protection
     fast_ewo = IntParameter(10, 50, default=50, space="buy", optimize=False, load=True)
@@ -132,12 +140,12 @@ class BinClucMadSMADevelop(IStrategy):
         100, 200, default=200, space="buy", optimize=False, load=True
     )
     ewo_low = DecimalParameter(
-        -20.0, -8.0, default=-19.881, space="buy", optimize=True, load=True
+        -20.0, -8.0, default=-19.881, space="buy", optimize=False, load=True
     )
     ewo_high = DecimalParameter(
-        2.0, 12.0, default=5.499, space="buy", optimize=True, load=True
+        2.0, 12.0, default=5.499, space="buy", optimize=False, load=True
     )
-    rsi_buy = IntParameter(30, 70, default=50, space="buy", optimize=True, load=True)
+    rsi_buy = IntParameter(30, 70, default=50, space="buy", optimize=False, load=True)
     # Buy CombinedBinHClucAndMADV6
 
     v6_buy_condition_0_enable = CategoricalParameter(
@@ -243,13 +251,13 @@ class BinClucMadSMADevelop(IStrategy):
         0.15, 0.30, default=0.08, space="sell", decimals=2, optimize=True, load=True
     )
     sell_custom_roi_rsi_3 = DecimalParameter(
-        44.0, 58.0, default=56, space="sell", decimals=2, optimize=False, load=True
+        44.0, 58.0, default=56, space="sell", decimals=2, optimize=True, load=True
     )
     sell_custom_roi_profit_4 = DecimalParameter(
         0.3, 0.7, default=0.14, space="sell", decimals=2, optimize=True, load=True
     )
     sell_custom_roi_rsi_4 = DecimalParameter(
-        44.0, 60.0, default=58, space="sell", decimals=2, optimize=False, load=True
+        44.0, 60.0, default=58, space="sell", decimals=2, optimize=True, load=True
     )
     sell_custom_roi_profit_5 = DecimalParameter(
         0.01, 0.1, default=0.04, space="sell", decimals=2, optimize=True, load=True
@@ -360,14 +368,20 @@ class BinClucMadSMADevelop(IStrategy):
     )
 
     def custom_stoploss(
-        self, pair: str, trade: "Trade", current_time: datetime, current_rate: float, current_profit: float, **kwargs
+        self,
+        pair: str,
+        trade: "Trade",
+        current_time: datetime,
+        current_rate: float,
+        current_profit: float,
+        **kwargs,
     ) -> float:
         # Manage losing trades and open room for better ones.
 
         if current_profit > 0:
             return 0.99
         else:
-            trade_time_50 = trade.open_date_utc + timedelta(minutes=240)
+            trade_time_50 = trade.open_date_utc + timedelta(minutes=280)
             # trade_time_240 = trade.open_date_utc + timedelta(minutes=240)
             # Trade open more then 60 minutes. For this strategy it's means -> loss
             # Let's try to minimize the loss
@@ -375,7 +389,9 @@ class BinClucMadSMADevelop(IStrategy):
             if current_time > trade_time_50:
 
                 try:
-                    number_of_candle_shift = int((current_time - trade_time_50).total_seconds() / 300)
+                    number_of_candle_shift = int(
+                        (current_time - trade_time_50).total_seconds() / 300
+                    )
                     dataframe, _ = self.dp.get_analyzed_dataframe(pair, self.timeframe)
                     candle = dataframe.iloc[-number_of_candle_shift].squeeze()
                     if (candle["sma_200_dec"]) & (candle["sma_200_dec_1h"]):
@@ -399,8 +415,6 @@ class BinClucMadSMADevelop(IStrategy):
 
         return 0.99
 
-
-
     def custom_sell(
         self,
         pair: str,
@@ -410,6 +424,9 @@ class BinClucMadSMADevelop(IStrategy):
         current_profit: float,
         **kwargs,
     ):
+
+        # return False
+
         dataframe, _ = self.dp.get_analyzed_dataframe(pair, self.timeframe)
         last_candle = dataframe.iloc[-1].squeeze()
 
@@ -561,7 +578,7 @@ class BinClucMadSMADevelop(IStrategy):
 
         return dataframe
 
-    def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+    def populate_buy_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         conditions = []
         # reset additional dataframe rows
         dataframe.loc[:, "v9_buy_condition_1_enable"] = False
@@ -586,8 +603,6 @@ class BinClucMadSMADevelop(IStrategy):
         dataframe.loc[:, "smaoffset_buy_condition_0_enable"] = False
         dataframe.loc[:, "smaoffset_buy_condition_1_enable"] = False
         dataframe.loc[:, "conditions_count"] = 0
-        dataframe.loc[:, 'buy_tag'] = ''
-
         dataframe["ma_buy"] = (
             dataframe[f"ma_buy_{self.base_nb_candles_buy.value}"]
             * self.low_offset.value
@@ -600,8 +615,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["rsi"] < self.rsi_buy.value)
                 & (self.smaoffset_buy_condition_0_enable.value == True)
             ),
-            ['smaoffset_buy_condition_0_enable', 'buy_tag']] = (1, 'buy_signal_smaoffset_0')
-
+            "smaoffset_buy_condition_0_enable",
+        ] = 1
 
         dataframe.loc[
             (
@@ -609,9 +624,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["EWO"] < self.ewo_low.value)
                 & (self.smaoffset_buy_condition_1_enable.value == True)
             ),
-            ['smaoffset_buy_condition_1_enable', 'buy_tag']] = (1, 'buy_signal_smaoffset_1')
-
-
+            "smaoffset_buy_condition_1_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200_1h"])
@@ -645,8 +659,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & dataframe["close"].le(dataframe["close"].shift())
                 & (self.v8_buy_condition_0_enable.value == True)
             ),
-            ['v8_buy_condition_0_enable', 'buy_tag']] = (1, 'buy_signal_v8_0')
-
+            "v8_buy_condition_0_enable",
+        ] = 1
 
         dataframe.loc[
             (
@@ -682,8 +696,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v8_buy_condition_1_enable.value == True)
             ),
-            ['v8_buy_condition_1_enable', 'buy_tag']] = (1, 'buy_signal_v8_1')
-
+            "v8_buy_condition_1_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] < dataframe["sma_5"])
@@ -714,10 +728,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["rsi"] < dataframe["rsi_1h"] - self.buy_rsi_diff.value)
                 & (self.v8_buy_condition_2_enable.value == True)
             ),
-            ['v8_buy_condition_2_enable', 'buy_tag']] = (1, 'buy_signal_v8_2')
-
-
-
+            "v8_buy_condition_2_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["sma_200"] > dataframe["sma_200"].shift(20))
@@ -755,9 +767,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["mfi"] < self.buy_mfi.value)
                 & (self.v8_buy_condition_3_enable.value == True)
             ),
-            ['v8_buy_condition_3_enable', 'buy_tag']] = (1, 'buy_signal_v8_3')
-
-
+            "v8_buy_condition_3_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_100_1h"])
@@ -799,7 +810,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["close"] < (dataframe["bb_lowerband"]))
                 & (self.v8_buy_condition_4_enable.value == True)
             ),
-            ['v8_buy_condition_4_enable', 'buy_tag']] = (1, 'buy_signal_v8_4')
+            "v8_buy_condition_4_enable",
+        ] = 1
         # start from here
         dataframe.loc[
             (
@@ -826,8 +838,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_1_enable.value == True)
             ),
-            ['v9_buy_condition_1_enable', 'buy_tag']] = (1, 'buy_signal_v9_1')
-
+            "v9_buy_condition_1_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200"])
@@ -852,8 +864,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_2_enable.value == True)
             ),
-            ['v9_buy_condition_2_enable', 'buy_tag']] = (1, 'buy_signal_v9_2')
-
+            "v9_buy_condition_2_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200_1h"])
@@ -865,8 +877,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_3_enable.value == True)
             ),
-            ['v9_buy_condition_3_enable', 'buy_tag']] = (1, 'buy_signal_v9_3')
-
+            "v9_buy_condition_3_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["rsi_1h"] < self.buy_rsi_1h_1.value)
@@ -877,7 +889,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_4_enable.value == True)
             ),
-            ['v9_buy_condition_4_enable', 'buy_tag']] = (1, 'buy_signal_v9_4')
+            "v9_buy_condition_4_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200"])
@@ -903,7 +916,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_5_enable.value == True)
             ),
-            ['v9_buy_condition_5_enable', 'buy_tag']] = (1, 'buy_signal_v9_5')
+            "v9_buy_condition_5_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["ema_26"] > dataframe["ema_12"])
@@ -922,7 +936,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_6_enable.value == True)
             ),
-            ['v9_buy_condition_6_enable', 'buy_tag']] = (1, 'buy_signal_v9_6')
+            "v9_buy_condition_6_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["rsi_1h"] < self.buy_rsi_1h_2.value)
@@ -946,7 +961,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_7_enable.value == True)
             ),
-            ['v9_buy_condition_7_enable', 'buy_tag']] = (1, 'buy_signal_v9_7')
+            "v9_buy_condition_7_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["rsi_1h"] < self.buy_rsi_1h_3.value)
@@ -962,7 +978,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_8_enable.value == True)
             ),
-            ['v9_buy_condition_8_enable', 'buy_tag']] = (1, 'buy_signal_v9_8')
+            "v9_buy_condition_8_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["rsi_1h"] < self.buy_rsi_1h_4.value)
@@ -978,7 +995,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v9_buy_condition_9_enable.value == True)
             ),
-            ['v9_buy_condition_9_enable', 'buy_tag']] = (1, 'buy_signal_v9_9')
+            "v9_buy_condition_9_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] < dataframe["sma_5"])
@@ -987,8 +1005,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["rsi"] < dataframe["rsi_1h"] - 43.276)
                 & (self.v9_buy_condition_10_enable.value == True)
             ),
-            ['v9_buy_condition_10_enable', 'buy_tag']] = (1, 'buy_signal_v9_10')
-
+            "v9_buy_condition_10_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200"])
@@ -1007,8 +1025,8 @@ class BinClucMadSMADevelop(IStrategy):
                 )
                 & (self.v6_buy_condition_0_enable.value == True)
             ),
-            ['v6_buy_condition_0_enable', 'buy_tag']] = (1, 'buy_signal_v6_0')
-
+            "v6_buy_condition_0_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] < dataframe["ema_50"])
@@ -1027,9 +1045,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["volume"] < (dataframe["volume"].shift() * 4))
                 & (self.v6_buy_condition_1_enable.value == True)
             ),
-            ['v6_buy_condition_1_enable', 'buy_tag']] = (1, 'buy_signal_v6_1')
-
-
+            "v6_buy_condition_1_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["close"] > dataframe["ema_200"])
@@ -1053,8 +1070,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["close"] < (dataframe["bb_lowerband"]))
                 & (self.v6_buy_condition_2_enable.value == True)
             ),
-            ['v6_buy_condition_2_enable', 'buy_tag']] = (1, 'buy_signal_v6_2')
-
+            "v6_buy_condition_2_enable",
+        ] = 1
         dataframe.loc[
             (
                 (dataframe["ema_26"] > dataframe["ema_12"])
@@ -1070,8 +1087,8 @@ class BinClucMadSMADevelop(IStrategy):
                 & (dataframe["close"] < (dataframe["bb_lowerband"]))
                 & (self.v6_buy_condition_3_enable.value == True)
             ),
-            ['v6_buy_condition_3_enable', 'buy_tag']] = (1, 'buy_signal_v6_3')
-
+            "v6_buy_condition_3_enable",
+        ] = 1
 
         # count the amount of conditions met
         dataframe.loc[:, "conditions_count"] = (
@@ -1105,7 +1122,7 @@ class BinClucMadSMADevelop(IStrategy):
         conditions.append(dataframe["volume"].gt(0))
 
         if conditions:
-            dataframe.loc[reduce(lambda x, y: x & y, conditions), "entry"] = 1
+            dataframe.loc[reduce(lambda x, y: x & y, conditions), "buy"] = 1
 
         # verbose logging enable only for verbose information or troubleshooting
         if self.cust_log_verbose == True:
@@ -1119,7 +1136,7 @@ class BinClucMadSMADevelop(IStrategy):
 
         return dataframe
 
-    def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+    def populate_sell_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         conditions = []
         dataframe["ma_sell"] = (
             dataframe[f"ma_sell_{self.base_nb_candles_sell.value}"]
@@ -1160,7 +1177,7 @@ class BinClucMadSMADevelop(IStrategy):
             )
 
         if conditions:
-            dataframe.loc[reduce(lambda x, y: x | y, conditions), "exit"] = 1
+            dataframe.loc[reduce(lambda x, y: x | y, conditions), "sell"] = 1
 
         return dataframe
 
