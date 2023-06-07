@@ -2,7 +2,7 @@
 version: '3'
 services:
   freqtrade1:
-    image: GodStraImage 
+    image: godstraimage 
     # image: freqtradeorg/freqtrade:develop
     # Use plotting image
     # image: freqtradeorg/freqtrade:develop_plot
@@ -28,7 +28,7 @@ services:
       --strategy GodStra
   
   freqtrade2:
-    image: GodStraImage 
+    image: godstraimage 
     # image: freqtradeorg/freqtrade:develop
     # Use plotting image
     # image: freqtradeorg/freqtrade:develop_plot
