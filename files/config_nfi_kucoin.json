@@ -147,7 +147,7 @@
         "enable_openapi": false,
         "jwt_secret_key": "4db505e33de1ca0194ebba7015490f29b87b4f024dea3d40cf7f8460cb6a455b",
         "ws_token": "asdfrewq12345tfjka",
-        "CORS_origins": ["http://13.239.140.205:8080"],
+        "CORS_origins": ["http://3.25.77.123:8080"],
         "username": "freqtrade",
         "password": "freqtradesifre"
     },
